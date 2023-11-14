@@ -1,0 +1,3 @@
+// 新浪接口需要设置referer
+http://hq.sinajs.cn?list=sh601003
+Referer: http://finance.sina.com.cn
