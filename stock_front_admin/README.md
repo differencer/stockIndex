@@ -35,6 +35,8 @@ npm run build:test
 
 # watch
 npm run watch
+
+
 ```
 常见打包错误：
 运行 npm run build,报错：
@@ -45,5 +47,11 @@ Module build failed (from ./node_modules/image-webpack-loader/index.js)
 先卸载
 npm uninstall image-webpack-loader
 然后使用
-cnpm install image-webpack-loader --save-dev
+npm install image-webpack-loader --save-dev
 ~~~
+
+
+```
+# run server！！！
+npm run dev
+```

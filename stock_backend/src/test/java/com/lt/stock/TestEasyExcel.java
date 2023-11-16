@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * @description:
- * @author: ~Teng~
- * @date: 2023/1/7 19:00
+ * @author: taotaozi
+ * @date: 2023/11/14 19:00
  */
 public class TestEasyExcel {
     public List<User> init() {
@@ -33,13 +33,13 @@ public class TestEasyExcel {
     @Test
     public void testWriteExcel() {
         List<User> users = init();
-        EasyExcel.write("D:\\MyCode\\JavaProjects\\web\\todayIndex\\stock_parent\\excel\\用户.xls", User.class).sheet("用户信息").doWrite(users);
+        EasyExcel.write("E:\\homework\\practice\\CodePractice\\JAVA\\stockIndex\\excel\\用户.xls", User.class).sheet("用户信息").doWrite(users);
     }
 
     @Test
     public void testReadExcel() {
         ArrayList<User> users = new ArrayList<>();
-        EasyExcel.read("D:\\MyCode\\JavaProjects\\web\\todayIndex\\stock_parent\\excel\\用户.xls", User.class, new AnalysisEventListener<User>() {
+        EasyExcel.read("E:\\homework\\practice\\CodePractice\\JAVA\\stockIndex\\excel\\用户.xls", User.class, new AnalysisEventListener<User>() {
             @Override
             public void invoke(User user, AnalysisContext analysisContext) {
                 System.out.println(user);

@@ -2,8 +2,8 @@
   <div class="login">
     <div class="mask">
       <div class="login-container">
-        <h2 class="title">今日指数-登录</h2>
-        <div class="login-form" :rules="rules">
+        <h2 class="title">行情中心-登录页</h2>
+        <div class="login-form" :rules="rules" >
           <el-form ref="form" :model="form" :rules="rules">
             <el-form-item label="" prop="username">
               <el-input v-model="form.username" prefix-icon="el-icon-user" placeholder="请输入账号"></el-input>
@@ -12,16 +12,16 @@
               <el-input v-model="form.password" :show-password="true" prefix-icon="el-icon-lock"
                         @keyup.enter.native="submit('form')" placeholder="请输入密码"></el-input>
             </el-form-item>
-            <el-form-item label="" prop="code">
-              <el-input v-model="form.rkey" style="display: none"></el-input>
-              <el-input v-model="form.code" style='width:54%;display:inline-block;vertical-align:top;'
-                        prefix-icon="el-icon-check" placeholder="请输入验证码"
-                        @keyup.enter.native="submit('form')"></el-input>
-              <s-identify style='display:inline-block;height:40px;vertical-align:top;cursor:pointer;'
-                          :identifyCode="code" :contentHeight='40' @click.native="handleRefreshCode"/>
-            </el-form-item>
+<!--            <el-form-item label="" prop="code">-->
+<!--              <el-input v-model="form.rkey" style="display: none"></el-input>-->
+<!--              <el-input v-model="form.code" style='width:54%;display:inline-block;vertical-align:top;'-->
+<!--                        prefix-icon="el-icon-check" placeholder="请输入验证码"-->
+<!--                        @keyup.enter.native="submit('form')"></el-input>-->
+<!--              <s-identify style='display:inline-block;height:40px;vertical-align:top;cursor:pointer;'-->
+<!--                          :identifyCode="code" :contentHeight='40' @click.native="handleRefreshCode"/>-->
+<!--            </el-form-item>-->
             <el-form-item label="">
-              <el-button type="primary" :loading="loading" style="width:100%;" @click.native="loginSubmit('form')">
+              <el-button type="gray" :loading="loading" style="width:100%;" @click.native="loginSubmit('form')">
                 登录
               </el-button>
             </el-form-item>
@@ -66,9 +66,9 @@ export default {
           {required: true, message: '请输入密码', trigger: 'blur'},
           // { pattern:this.validator.regExpPassword, message: '密码长度不正确', trigger: 'blur' }
         ],
-        code: [
-          {required: true, message: '请输入验证码', trigger: 'blur'},
-        ]
+        // code: [
+        //   {required: true, message: '请输入验证码', trigger: 'blur'},
+        // ]
       }
     }
   },
@@ -125,12 +125,12 @@ export default {
         this.$progress.done();
         return;
       }
-      if (!this.form.code) {
-        this.error('请输入验证码!');
-        this.loading = false;
-        this.$progress.done();
-        return;
-      }
+      // if (!this.form.code) {
+      //   this.error('请输入验证码!');
+      //   this.loading = false;
+      //   this.$progress.done();
+      //   return;
+      // }
       this.handleSubmit(login, this.$refs[name], this, data => {
         console.log(data, "loginSuccess");
         this.loading = false;
@@ -176,19 +176,21 @@ export default {
   /*background:rgba(8,0,0,.4);*/
   /*background:rgb(81, 90, 110);*/
   /*background: #1E9FFF;*/
+
 }
 
 .login-container {
   overflow: hidden;
   position: relative;
-  width: 430px;
+  width: 600px;
   max-width: 100%;
-  padding-bottom: 16px;
+  padding-bottom: 50px;
   margin: 0 auto;
   /*margin: 130px 35px 0;*/
-  background: #fff;
-  border-radius: 8px;
+  background: #e1f3d8;
+  border-radius: 4px;
   box-shadow: 0 0 6px #cac6c6;
+
 }
 
 .login-container .title {
@@ -201,5 +203,6 @@ export default {
   width: 60%;
   margin: 0 auto;
   padding-bottom: 10px;
+
 }
 </style>
