@@ -8,6 +8,7 @@ import com.lt.stock.pojo.vo.LoginResponseVo;
 import com.lt.stock.utils.JwtTokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
@@ -27,13 +28,13 @@ import java.util.List;
 
 /**
  * @description: 自定义登录过滤器
- * @author: ~Teng~
- * @date: 2023/2/14 18:26
+ * @author: taotaozi
+ * @date: 2023/11/14 18:26
  */
 public class JwtLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    private RedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
+    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -58,7 +59,8 @@ public class JwtLoginAuthenticationFilter extends AbstractAuthenticationProcessi
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
         // 2. 判断方式方式是 ajax 方式提交还是 form 表单方式提交
-        if (request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)) {
+        if (request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
+            //request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)
             // 3. 获取请求流中的用户信息
             // 3.1 从 request 对象中获取流对象
             ServletInputStream inputStream = request.getInputStream();
@@ -77,11 +79,11 @@ public class JwtLoginAuthenticationFilter extends AbstractAuthenticationProcessi
             rKey = request.getParameter(rKeyParameter);
         }
         String rKeyValue = (String) redisTemplate.opsForValue().get(rKey);
-        if (rKeyValue == null || !rKeyValue.equals(checkCode)) {
-            throw new RuntimeException("验证码错误");
-        }
-        // 删除验证码
-        redisTemplate.delete(rKey);
+//        if (rKeyValue == null || !rKeyValue.equals(checkCode)) {
+//            throw new RuntimeException("验证码错误");
+//        }
+//        // 删除验证码
+//        redisTemplate.delete(rKey);
         // 防止空字符串
         username = StringUtils.isBlank(username) ? "" : username;
         password = StringUtils.isBlank(password) ? "" : password;

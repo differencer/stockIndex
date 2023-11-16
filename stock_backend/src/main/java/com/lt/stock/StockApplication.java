@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 /**
  * @description:
- * @author: ~Teng~
- * @date: 2023/1/6 18:08
+ * @author: taotao
+ * @date: 2023/11/16 18:08
  */
 @SpringBootApplication
 @MapperScan("com.lt.stock.mapper")
