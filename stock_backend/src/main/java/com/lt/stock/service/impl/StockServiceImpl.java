@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 /**
  * @description:
- * @author: ~Teng~
+ * @author: Tao
  * @date: 2023/1/6 18:27
  */
 @Service
@@ -55,7 +55,7 @@ public class StockServiceImpl implements StockService {
         // 2. 获取最近最新的股票有效交易日
         Date date = DateTimeUtil.getLastDate4Stock(DateTime.now()).toDate();
         // TODO mock 数据，后续大盘数据实时拉去，将该行注释掉 传入的日期秒必须为0
-        String mockDate = "20220103111500";
+        String mockDate = "20211226105600";
         date = DateTime.parse(mockDate, DateTimeFormat.forPattern("yyyyMMddHHmmss")).toDate();
         // 3. 调用mapper查询指定日期下对应的国内大盘数据
         List<InnerMarketResponseVo> list = stockMarketIndexInfoMapper.getMarketInfo(innerList, date);

@@ -1,3 +1,34 @@
-// 新浪接口需要设置referer
-http://hq.sinajs.cn?list=sh601003
+### 新浪接口需要设置referer
+http://hq.sinajs.cn?list=sh000001
 Referer: http://finance.sina.com.cn
+
+### 大盘查询接口
+http://localhost:8081/api/quot/index/all
+
+### 板块接口
+http://127.0.0.1:8080/api/quot/sector/all
+
+### 涨跌幅
+http://127.0.0.1:8080/api/quot/stock/increase
+
+### 分页
+http://127.0.0.1:8080/api/quot/stock/all?page=2&pageSize=10
+
+### 涨跌停
+http://localhost:8080/api/quot//stock/updown/count
+
+
+### 获取大盘交易量 T & T-1 对比
+http://localhost:8080/api/quot/stock/tradevol
+
+
+### 个股涨跌幅度
+http://localhost:8080/api/quot/stock/updown
+
+
+### 个股分时
+http://localhost:8080/api/quot/stock/screen/time-sharing?code=600019
+
+### 个股k线
+http://localhost:8080/api/quot/stock/screen/dkline?code=600019
+

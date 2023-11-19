@@ -78,7 +78,7 @@ public class JwtLoginAuthenticationFilter extends AbstractAuthenticationProcessi
             checkCode = request.getParameter(codeParameter);
             rKey = request.getParameter(rKeyParameter);
         }
-        String rKeyValue = (String) redisTemplate.opsForValue().get(rKey);
+       // String rKeyValue = (String) redisTemplate.opsForValue().get(rKey);
 //        if (rKeyValue == null || !rKeyValue.equals(checkCode)) {
 //            throw new RuntimeException("验证码错误");
 //        }

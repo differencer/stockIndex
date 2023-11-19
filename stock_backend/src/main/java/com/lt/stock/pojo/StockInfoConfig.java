@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @description:
- * @author: ~Teng~
+ * @author: taotao
  * @date: 2023/1/7 12:51
  */
 @ConfigurationProperties(prefix = "stock")

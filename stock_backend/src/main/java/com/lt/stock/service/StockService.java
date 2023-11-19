@@ -10,8 +10,8 @@ import java.util.Map;
 
 /**
  * @description: 定义股票服务接口
- * @author: ~Teng~
- * @date: 2023/1/6 18:26
+ * @author: taotao
+ * @date: 2023/11/16 18:26
  */
 public interface StockService {
     /**
