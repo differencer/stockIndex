@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String[] getPubPath() {
         //公共访问资源
         String[] urls = {
-                "/**/*.css", "/**/*.js", "/favicon.ico",
+                "/**","/**/*.css", "/**/*.js", "/favicon.ico",
                 "/druid/**", "/webjars/**", "/v2/api-docs", "/api/captcha",
                 "/swagger/**", "/swagger-resources/**", "/swagger-ui.html"
         };

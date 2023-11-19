@@ -118,13 +118,14 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #222733;
+  background-color: #d1dbe5;
   color: #ffffff;
   .header-name {
     font-size: 28px;
     line-height: 40px;
     font-weight: 600;
-    color: #ffffff;
+    // 中板字体颜色
+    color: #000000;
     white-space: nowrap;
   }
   .seach {
@@ -132,7 +133,7 @@ export default {
     align-items: center;
     .seach-name {
       font-size: 18px;
-      color: #cdcdcd;
+      color: #000000;
       margin-right: 10px;
       white-space: nowrap;
     }
@@ -154,7 +155,9 @@ export default {
           border: none;
           background-color: #f2f2f2;
           font-size: 14px;
-          color: #999999;
+          //color: #5daf34;
+          color: #5daf34;
+
         }
       }
       .icon {
@@ -164,7 +167,8 @@ export default {
         margin-top: -15px;
         i {
           font-size: 30px;
-          color: #999999;
+          // 搜索图标
+          color: #434c62;
         }
       }
       .history-search {
@@ -173,7 +177,7 @@ export default {
         top: 40px;
         width: 300px;
         height: 300px;
-        background-color: #222733;
+        background-color: #f0f7ff;
         border-radius: 6px;
         overflow: hidden;
 
@@ -184,7 +188,7 @@ export default {
           margin-top: 20px;
           width: 100%;
           height: 100%;
-          background-color: #ffffff;
+          background-color: #ff4d51;
           color: #000;
           font-size: 14px;
           overflow-y: auto;
@@ -206,8 +210,9 @@ export default {
     }
   }
 }
+// 小模块 container背景板
 .el-main {
-  background-color: #161522;
+  background-color: #d1dbe5;
 }
 
 a {

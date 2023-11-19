@@ -942,7 +942,8 @@ export default {
       padding: 20px;
       margin-right: 20px;
       margin-bottom: 20px;
-      background-color: #222733;
+      // 模块颜色
+      background-color: #f0f0f0;
       border-radius: 10px;
       overflow: hidden;
 
