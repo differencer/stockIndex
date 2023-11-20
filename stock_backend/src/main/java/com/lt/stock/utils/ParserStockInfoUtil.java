@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 /**
  * @description:
- * @author: ~Teng~
- * @date: 2023/1/9 18:42
+ * @author: taotao
+ * @date: 2023/11/19 18:42
  */
 @Component
 public class ParserStockInfoUtil {
