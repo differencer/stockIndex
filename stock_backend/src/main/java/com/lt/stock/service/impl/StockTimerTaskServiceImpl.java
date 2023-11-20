@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 /**
  * @description: 定义采集股票接口实现类
- * @author: ~Teng~
+ * @author: taotao
  * @date: 2023/1/9 16:43
  */
 @Service
