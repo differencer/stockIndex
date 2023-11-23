@@ -2,6 +2,7 @@ package com.lt.stock.config.job;
 
 import com.lt.stock.service.StockTimerTaskService;
 import com.xxl.job.core.handler.annotation.XxlJob;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,18 @@ import org.springframework.stereotype.Component;
  * @date: 2023/1/9 21:45
  */
 @Component
+@Slf4j
 public class StockJob {
     private static Logger logger = LoggerFactory.getLogger(StockJob.class);
 
     @Autowired
+
     private StockTimerTaskService stockTimerTaskService;
+
+    @XxlJob("demoJobHandler")
+    public void demoJobHandler(){
+        log.info("test~~~~~");
+    }
 
     /**
      * 采集国内大盘数据

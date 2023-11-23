@@ -94,4 +94,15 @@
         select sec_code
         from stock_business;
     </select>
+
+
+    <select id="queryRtStockBusiness" resultType="com.lt.stock.pojo.vo.StockRtDescriptionVo">
+        SELECT
+            sb.sec_code as code,
+            sb.sector_name as trade,
+            sb.business as business,
+            sb.sec_name as name
+        from stock_business as sb
+        where sb.sec_code = #{code};
+    </select>
 </mapper>

@@ -205,4 +205,62 @@
         from stock_rt_info sri
         where sri.stock_code like concat('%', #{code}, '%')
     </select>
+
+
+    <!--
+      功能描述：统计每周内的股票数据信息，信息包含：
+      股票ID、 一周内最高价、 一周内最低价 、周1开盘价、周5的收盘价、
+      整周均价、以及一周内最大交易日期（一般是周五所对应日期）;
+  -->
+    <resultMap id="getRtStockWeeklineMap" type="com.lt.stock.pojo.vo.WeeklineVo">
+        <result column="stock_code" property="stock_code"/>
+    </resultMap>
+
+    <select id="getRtStockWeekline" resultMap="getRtStockWeeklineMap">
+        SELECT
+            tmp.avgPrice as avgPrice,
+            tmp.minPrice as minPrice,
+            sri1.open_price as openPrice,
+            tmp.maxPrice as maxPrice,
+            sri2.cur_price as closePrice,
+            DATE_FORMAT(tmp.maxDate,'%y%m%d') as mxTime,
+            tmp.code as stock_code
+        from stock_rt_info sri1
+                 inner join stock_rt_info sri2
+                 inner join (select
+                                 min(sri.cur_time) as minDate,
+                                 max( sri.cur_time ) as maxDate,
+                                 max(cur_price) as maxPrice,
+                                 avg(cur_price) as avgPrice,
+                                 min(cur_price) as minPrice,
+                                 stock_code as code
+                             from
+                                 stock_rt_info as sri
+                             where
+                                 sri.stock_code =#{code}
+                             group by
+                                 date_format( sri.cur_time, '%y%U')
+        )tmp
+                            on sri1.stock_code = tmp.code and sri1.cur_time =tmp.minDate and sri2.stock_code =tmp.code and sri2.cur_time = tmp.maxDate;
+    </select>
+
+
+
+
+
+    <select id="queryStockRtLastTradeInfo" resultType="com.lt.stock.pojo.vo.StockRtLastTradeInfo">
+        SELECT
+            DATE_FORMAT( cur_time, '%Y%m%d%H%i' ) AS date,
+            trade_amount AS tradeAmt,
+            trade_volume AS tradeVol,
+            cur_price AS tradePrice
+        FROM
+            stock_rt_info
+        where stock_rt_info.stock_code = #{code}
+
+        ORDER BY
+            cur_time DESC
+            LIMIT 10;
+    </select>
+
 </mapper>

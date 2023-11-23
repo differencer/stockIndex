@@ -1,6 +1,7 @@
 package com.lt.stock.service.impl;
 
 import com.google.common.collect.Lists;
+import com.lt.stock.common.Response;
 import com.lt.stock.pojo.entity.SysPermission;
 import com.lt.stock.pojo.vo.PermissionRespNodeVo;
 import com.lt.stock.service.PermissionService;
@@ -38,5 +39,10 @@ public class PermissionServiceImpl implements PermissionService {
             }
         }
         return list;
+    }
+
+    @Override
+    public Response<List<SysPermission>> treeNode() {
+        return null;
     }
 }

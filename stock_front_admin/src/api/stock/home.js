@@ -20,12 +20,14 @@ export function quotSectorAll(params) {
 }
 
 //外盘指数
+// todo 删去外盘指数
 export function quotExternalIndex(params) {
     return axios.request({
         url: '/quot/external/index',
         method: 'get',
         params,
-    });
+    }
+    );
 }
 
 //涨幅榜

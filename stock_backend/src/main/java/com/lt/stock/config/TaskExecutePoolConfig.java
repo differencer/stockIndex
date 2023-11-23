@@ -10,7 +10,7 @@ import java.util.concurrent.RejectedExecutionHandler;
 
 /**
  * @description: 配置线程池
- * @author: ~Teng~
+ * @author: TaoTao
  * @date: 2023/1/9 23:03
  */
 @Configuration

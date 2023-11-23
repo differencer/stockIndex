@@ -16,6 +16,7 @@
  */
 
 import stockList from '@/views/components/stock/componment/list';
+import stockIndex from '@/views/components/stock/componment/sindex';
 import fa from "element-ui/src/locale/lang/fa";
 
 // 所有人都可以访问
@@ -54,6 +55,11 @@ const routes = [
 					path: '/stockDetail',
 					name: 'stockDetail',
 					component: ()=> import('@/views/components/stock/componment/details')
+				},
+				{
+					path: '/stockIndex',
+					name: 'stockIndex',
+					component: ()=> import('@/views/components/stock/componment/sindex')
 				}
 			]
 		}]

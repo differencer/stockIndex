@@ -2,6 +2,9 @@ package com.lt.stock.controller;
 
 import com.lt.stock.common.Response;
 import com.lt.stock.pojo.dto.LoginRequestDto;
+import com.lt.stock.pojo.entity.SysUser;
+import com.lt.stock.pojo.vo.ConditionQueryUserReq;
+import com.lt.stock.pojo.vo.ConditionQueryUserResp;
 import com.lt.stock.pojo.vo.LoginResponseVo;
 import com.lt.stock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +48,25 @@ public class UserController {
     public Response<String> getUser() {
         return Response.ok("hello");
     }
+
+    /*
+         功能描述：多条件综合查询用户分页信息，条件包含：分页信息 用户创建日期范围
+         服务路径：/api/users
+         服务方法：Post
+      */
+    @PostMapping("/users")
+    public Response<ConditionQueryUserResp> conditionsQueryUser(@RequestBody ConditionQueryUserReq req){
+        return userService.conditionsQueryUser(req);
+    }
+    /*
+        功能描述：添加用户信息
+        服务路径：/api/users
+        测试路径: /api/addUsers
+        服务方法：Post
+     */
+    @PostMapping("/addUsers")
+    public Response addUsers(@RequestBody SysUser adduser){
+        return userService.addUsers(adduser);
+    }
+
 }

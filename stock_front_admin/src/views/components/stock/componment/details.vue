@@ -150,37 +150,37 @@
           <div class="ul">
             <div class="li">
               <span>收盘价</span>
-              <span>{{quotSecondDetailData.preClosePrice}}</span>
+              <span>{{quotSecondDetailDataNew.preClosePrice}}</span>
             </div>
             <div class="li">
               <span>开盘价</span>
-              <span>{{quotSecondDetailData.openPrice}}</span>
+              <span>{{quotSecondDetailDataNew.openPrice}}</span>
             </div>
             <div class="li">
               <span>最新价</span>
-              <span>{{quotSecondDetailData.tradePrice}}</span>
+              <span>{{quotSecondDetailDataNew.tradePrice}}</span>
             </div>
             <div class="li">
               <span>最高价</span>
-              <span>{{quotSecondDetailData.highPrice}}</span>
+              <span>{{quotSecondDetailDataNew.highPrice}}</span>
             </div>
           </div>
           <div class="ul">
             <div class="li">
               <span>最低价</span>
-              <span>{{quotSecondDetailData.lowPrice}}</span>
+              <span>{{quotSecondDetailDataNew.lowPrice}}</span>
             </div>
             <div class="li">
               <span>交易金额</span>
-              <span>{{quotSecondDetailData.tradeAmt}}</span>
+              <span>{{quotSecondDetailDataNew.tradeAmt}}</span>
             </div>
             <div class="li">
               <span>交易数量</span>
-              <span>{{quotSecondDetailData.tradeVol}}</span>
+              <span>{{quotSecondDetailDataNew.tradeVol}}</span>
             </div>
             <div class="li">
-              <span>当前日期</span>
-              <span>{{quotSecondDetailData.curDate}}</span>
+              <span>时间</span>
+              <span>{{quotSecondDetailDataNew.date}}</span>
             </div>
           </div>
         </div>
@@ -258,7 +258,7 @@ export default {
       candWeekBar: null,
       //切换表示
       tabIndex: 0,
-      tabDate: ["分时", "日K", "周K", "月K"],
+      tabDate: ["分时", "日K", "周K"],
       // tabDate: ["分时", "日K"],
       //个股秒级行情数据查询定时器
       quotStockScreenSecondTimer: null,
@@ -276,6 +276,8 @@ export default {
       StockScreenSecond: [],
       //个股分时详情数据
       quotSecondDetailData: {},
+      // 个股最新
+      quotSecondDetailDataNew:{},
       //个股分时前收盘价
       maxIntervalData: 0
     };
@@ -337,7 +339,7 @@ export default {
           bottom: "1%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         yAxis: {
           show: true,
@@ -380,10 +382,10 @@ export default {
             smooth: false,
             symbol: 'none',
             lineStyle: {
-              color: "#ffffff"
+              color: "#000000"
             },
             itemStyle: {
-              borderColor: "#ffffff"
+              borderColor: "#000000"
             }
           }
         ]
@@ -433,7 +435,7 @@ export default {
           bottom: "2%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         yAxis: {
           show: true,
@@ -542,7 +544,7 @@ export default {
           bottom: "1%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         animation: false,
         series: [
@@ -602,7 +604,7 @@ export default {
           bottom: "2%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         yAxis: {
           show: true,
@@ -711,7 +713,7 @@ export default {
           bottom: "1%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         animation: false,
         series: [
@@ -771,7 +773,7 @@ export default {
           bottom: "2%",
           show: true,
           borderColor: "transparent",
-          backgroundColor: "#000000"
+          backgroundColor: "#ffffff"
         },
         yAxis: {
           show: true,
@@ -868,17 +870,14 @@ export default {
       quotStockScreenSecond({
         code: that.code
       }).then(data => {
-        console.log("数据返回成功 - 个股秒级");
         console.log(data);
         if (data.data.data) {
           // that.StockScreenSecond.push(...data.data.data);
           that.StockScreenSecond=data.data.data;
         }
         that.quotStockScreenSecondTimer = setInterval(() => {
-          console.log("正在请求 - 个股秒级");
           that.quotStockScreenSecond();
           clearInterval(that.quotStockScreenSecondTimer);
-          console.log("请求结束 - 个股秒级");
         }, that.formatSeconds(1));
       });
     },
@@ -891,7 +890,10 @@ export default {
         console.log("数据返回成功 - 个股分时");
         console.log(data);
         data=data.data.data;
+        // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        // console.log(data[data.length-1]);
         that.quotSecondDetailData = { ...data };
+        that.quotSecondDetailDataNew = data[data.length-1];
         that.quotSecondDetailTimer = setInterval(() => {
           console.log("正在请求 - 个股分时");
           that.quotSecondDetail();
@@ -1038,8 +1040,6 @@ export default {
       weekKline({
         code: that.code
       }).then(data => {
-        console.log("数据返回成功 - 个股周K线",data);
-        debugger;
         let candlestickData = [];
         let candlestickXAxisData = [];
         let candlestickBarData = [];
@@ -1158,7 +1158,7 @@ export default {
       padding: 20px;
       margin-right: 20px;
       margin-bottom: 20px;
-      background-color: #222733;
+      background-color: #f0f7ff;
       border-radius: 10px;
       .echarts-content {
         position: relative;
@@ -1179,7 +1179,7 @@ export default {
         .tab-item {
           width: 59px;
           height: 30px;
-          background-color: #434c62;
+          background-color: #ffffff;
           border-radius: 4px;
           margin-right: 20px;
           text-align: center;
@@ -1188,8 +1188,8 @@ export default {
           cursor: pointer;
         }
         .active {
-          background-color: #ffffff;
-          color: #666666;
+          background-color: #434c62;
+          color: #ffffff;
         }
       }
     }
@@ -1198,7 +1198,7 @@ export default {
         text-align: center;
         height: 28px;
         font-size: 20px;
-        color: #ffffff;
+        color: #000000;
         margin-bottom: 20px;
       }
       .dl {
@@ -1209,12 +1209,12 @@ export default {
           font-size: 18px;
           line-height: 22px;
           margin-right: 20px;
-          color: #ededed;
+          color: #000000;
         }
         .dd {
           font-size: 16px;
           line-height: 22px;
-          color: #cdcdcd;
+          color: #000000;
           span {
             margin-right: 20px;
             &:last-child {
@@ -1235,7 +1235,7 @@ export default {
           margin-bottom: 10px;
           span {
             font-size: 14px;
-            color: #cdcdcd;
+            color: #000000;
             &:nth-child(1) {
               display: inline-block;
               width: 60px;
@@ -1248,7 +1248,7 @@ export default {
     .table {
       span {
         font-size: 14px;
-        color: #cdcdcd;
+        color: #000000;
         width: 100px;
         line-height: 20px;
         &:nth-child(2) {

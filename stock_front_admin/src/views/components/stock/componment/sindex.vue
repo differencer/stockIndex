@@ -1,12 +1,29 @@
 <template>
   <div class="home">
-
+    <div class="module-group">
+      <div class="module mr0">
+        <div class="module-title">资讯新闻</div>
+        <ul class="news-list">
+          <li
+              v-for="(item,index) in newsTableData"
+              :key="index"
+          >
+            <div class="title">
+              {{ item.title }}
+            </div>
+            <div class="content">
+              {{ item.content }}
+            </div>
+            <div class="time">
+              {{ item.time }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="module-group">
       <div class="module">
         <div class="module-title">沪深指数</div>
-        <router-link :to="{path: '/stockIndex'}">
-          <div class="module-title module-title-right">查看更多</div>
-        </router-link>
         <Table
             :tableData="domesticTableData"
             :tableColumnData="domesticTableColumnData"
@@ -19,47 +36,40 @@
             :tableColumnData="plateTableColumnData"
         />
       </div>
-
+      <!--      <div class="module mr0">-->
+      <!--        <div class="module-title">外盘指数</div>-->
+      <!--        <Table-->
+      <!--            :tableData="outerPlateTableData"-->
+      <!--            :tableColumnData="outerPlateTableColumnData"-->
+      <!--        />-->
+      <!--      </div>-->
     </div>
+
     <div class="module-group">
-      <div class="module flex2">
-        <div class="module-title">涨幅榜</div>
-        <router-link :to="{path: '/stockList'}">
-          <div class="module-title module-title-right">查看更多</div>
-        </router-link>
-        <Table
-            :tableData="increaseTableData"
-            :tableColumnData="increaseTableColumnData"
-            @columnClickCallBack="callBack"
-        />
+      <div class="module mb0">
+        <div
+            ref="UdChart"
+            :style="{width: '100%', height: '100%'}"
+        ></div>
       </div>
-
+      <div class="module mb0">
+        <div
+            ref="moneyChart"
+            :style="{width: '100%', height: '100%'}"
+        ></div>
+        <div class="codekd">
+          <div class="left">9:30</div>
+          <div class="middle">11:30/13:00</div>
+          <div class="right">15:00</div>
+        </div>
+      </div>
+      <div class="module mr0 mb0">
+        <div
+            ref="meStockChart"
+            :style="{width: '100%', height: '100%'}"
+        ></div>
+      </div>
     </div>
-<!--    <div class="module-group">-->
-<!--      <div class="module mb0">-->
-<!--        <div-->
-<!--            ref="UdChart"-->
-<!--            :style="{width: '100%', height: '100%'}"-->
-<!--        ></div>-->
-<!--      </div>-->
-<!--      <div class="module mb0">-->
-<!--        <div-->
-<!--            ref="moneyChart"-->
-<!--            :style="{width: '100%', height: '100%'}"-->
-<!--        ></div>-->
-<!--        <div class="codekd">-->
-<!--          <div class="left">9:30</div>-->
-<!--          <div class="middle">11:30/13:00</div>-->
-<!--          <div class="right">15:00</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="module mr0 mb0">-->
-<!--        <div-->
-<!--            ref="meStockChart"-->
-<!--            :style="{width: '100%', height: '100%'}"-->
-<!--        ></div>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </template>
 
@@ -71,8 +81,8 @@ import {
   //quotExternalIndex,
   quotStockIncrease,
   quotStockUpdownCount,
-  // quotStockTradevol,
-  // quotStockUpdown
+  quotStockTradevol,
+  quotStockUpdown
 } from "@/api/stock/home";
 
 export default {
@@ -152,8 +162,8 @@ export default {
         },
         {
           prop: "curDate",
-          label: "当前时间",
-          isDifferentStates: "",
+          label: "当前日期",
+          isDifferentStates: true,
           extraTextBefore: "",
           extraTextAfter: "",
           defaults: "0"
@@ -220,8 +230,8 @@ export default {
         },
         {
           prop: "curDate",
-          label: "当前日期",
-          isDifferentStates: true,
+          label: "当前时间",
+          isDifferentStates: "",
           extraTextBefore: "",
           extraTextAfter: "",
           defaults: "0"
@@ -391,14 +401,34 @@ export default {
           title: "新浪财经",
           content: "涉嫌短线交易公司股票，圆通速递副总裁张益忠遭证监会立案",
           time: "19:07"
-        }
+        },
+        {
+          title: "新浪财经",
+          content: "上午交钱下午失联！洛克资本老板疑似跑路，投资人维权中，涉及资金约12亿元",
+          time: "13:23"
+        },
+        {
+          title: "新浪财经",
+          content: "遏制房企风险蔓延：金融部门再提“白名单”料明年见效",
+          time: "08:20"
+        },
+        {
+          title: "新浪财经",
+          content: "谈妥了？OpenAI官宣前CEO和总裁将回归，两人连同微软CEO齐发声",
+          time: "14:09"
+        },
+        {
+          title: "新浪财经",
+          content: "一周巨亏430亿美元！对冲基金空头遭遇大溃败",
+          time: "19:01"
+        },
       ],
-      // //涨停跌停数
-      // UdChart: null,
+      //涨停跌停数
+      UdChart: null,
       //赚钱效应
       moneyChart: null,
-      // //个股涨跌
-      // meStockChart: null,
+      //个股涨跌
+      meStockChart: null,
       //国内指数定时器
       quotIndexAllTimer: null,
       //板块指数定时器
@@ -407,264 +437,264 @@ export default {
       // quotExternalIndexTimer: null,
       //涨幅榜定时器
       quotStockIncreaseTimer: null,
-      // //涨停跌停定时器
-      // quotStockUpdownCountTimer: null,
+      //涨停跌停定时器
+      quotStockUpdownCountTimer: null,
       //个股涨跌定时器
       quotStockUpdownTimer: null,
-      // //成交量
-      // quotStockTradevolTimer: null
+      //成交量
+      quotStockTradevolTimer: null
     };
   },
   methods: {
-    // //涨停跌停数
-    // UdChartDrawLine() {
-    //   // 基于准备好的dom，初始化echarts实例
-    //   this.UdChart = this.$echarts.init(this.$refs.UdChart);
-    //   // 绘制图表
-    //   this.UdChart.setOption({
-    //     title: {
-    //       text: "涨停跌停数",
-    //       textStyle: {
-    //         color: "#000000"
-    //       }
-    //     },
-    //     xAxis: {
-    //       type: "category",
-    //       data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    //       axisLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: "#979797"
-    //         }
-    //       }
-    //     },
-    //     grid: {
-    //       left: "10%",
-    //       right: "10%",
-    //       top: "20%",
-    //       bottom: "10%"
-    //     },
-    //     yAxis: {
-    //       type: "value",
-    //       splitLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: ["#979797"],
-    //           width: 1,
-    //           type: "dashed"
-    //         }
-    //       },
-    //       axisLine: {
-    //         show: false
-    //       }
-    //     },
-    //     tooltip: {
-    //       show: true
-    //     },
-    //     legend: {
-    //       data: ["涨停", "跌停"],
-    //       right: "60px",
-    //       top: "0px",
-    //       inactiveColor: "#ffffff",
-    //       textStyle: {
-    //         color: "#000000"
-    //       }
-    //     },
-    //     series: [
-    //       {
-    //         name: "涨停",
-    //         data: [820, 932, 901, 934, 1290, 1330, 1320],
-    //         type: "line",
-    //         smooth: true,
-    //         lineStyle: {
-    //           color: "#FE1919"
-    //         }
-    //       },
-    //       {
-    //         name: "跌停",
-    //         data: [82, 93, 91, 94, 190, 130, 320],
-    //         type: "line",
-    //         smooth: true,
-    //         lineStyle: {
-    //           color: "#249900"
-    //         }
-    //       }
-    //     ],
-    //     textStyle: {
-    //       color: "#000000"
-    //     }
-    //   });
-    // },
-    // //成交量
-    // moneyChartDrawLine() {
-    //   // 基于准备好的dom，初始化echarts实例
-    //   this.moneyChart = this.$echarts.init(this.$refs.moneyChart);
-    //   // 绘制图表
-    //   this.moneyChart.setOption({
-    //     title: {
-    //       text: "成交量",
-    //       textStyle: {
-    //         color: "#FFFFFF"
-    //       }
-    //     },
-    //     grid: {
-    //       left: "10%",
-    //       right: "10%",
-    //       top: "20%",
-    //       bottom: "10%"
-    //     },
-    //     xAxis: {
-    //       show: false,
-    //       type: "category",
-    //       data: new Array(240),
-    //       axisLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: "#979797"
-    //         }
-    //       }
-    //     },
-    //     yAxis: {
-    //       type: "value",
-    //       splitLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: ["#979797"],
-    //           width: 1,
-    //           type: "dashed"
-    //         }
-    //       },
-    //       axisLine: {
-    //         show: false
-    //       }
-    //     },
-    //     tooltip: {
-    //       show: true,
-    //       trigger: "axis",
-    //       formatter(params) {
-    //         // debugger;
-    //         return `<span>时间</span>: ${params[0].data.time}<br/>
-    //         昨日: <span style="color: #FE1919">${params[0].value}</span><br/>
-    //         今日: <span style="color: #249900">${params[1].value}</span><br/>`;
-    //       }
-    //     },
-    //     legend: {
-    //       data: ["昨日", "今日"],
-    //       right: "80px",
-    //       inactiveColor: "#ffffff",
-    //       textStyle: {
-    //         color: "#ffffff"
-    //       }
-    //     },
-    //     series: [
-    //       {
-    //         name: "昨日",
-    //         data: [820, 932, 901, 934, 1290, 1330, 1320],
-    //         type: "line",
-    //         smooth: true,
-    //         lineStyle: {
-    //           color: "#FE1919"
-    //         }
-    //       },
-    //       {
-    //         name: "今日",
-    //         data: [82, 93, 91, 94, 190, 130, 320],
-    //         type: "line",
-    //         smooth: true,
-    //         lineStyle: {
-    //           color: "#249900"
-    //         }
-    //       }
-    //     ],
-    //     textStyle: {
-    //       color: "#ffffff"
-    //     }
-    //   });
-    // },
-    // //个股涨跌
-    // meStockChartDrawLine() {
-    //   // 基于准备好的dom，初始化echarts实例
-    //   this.meStockChart = this.$echarts.init(this.$refs.meStockChart);
-    //   // 绘制图表
-    //   this.meStockChart.setOption({
-    //     title: {
-    //       text: "个股涨跌",
-    //       textStyle: {
-    //         color: "#FFFFFF"
-    //       }
-    //     },
-    //     grid: {
-    //       left: "10%",
-    //       right: "10%",
-    //       top: "20%",
-    //       bottom: "15%"
-    //     },
-    //     xAxis: {
-    //       type: "category",
-    //       data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    //       axisLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: "#979797"
-    //         }
-    //       },
-    //       axisLabel: {
-    //         interval: 0,
-    //         rotate: 38
-    //       }
-    //     },
-    //     yAxis: {
-    //       type: "value",
-    //       splitLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           color: ["#979797"],
-    //           width: 1,
-    //           type: "dashed"
-    //         }
-    //       },
-    //       axisLine: {
-    //         show: false
-    //       }
-    //     },
-    //     tooltip: {
-    //       show: true
-    //     },
-    //     series: [
-    //       {
-    //         data: [820, 932, 901, 934, 1290, 1330, 1320],
-    //         type: "bar",
-    //         smooth: true,
-    //         itemStyle: {
-    //           color: function (value) {
-    //             if (value.data.status == "up") {
-    //               return "#FE1919";
-    //             } else {
-    //               return "#249900";
-    //             }
-    //           }
-    //         },
-    //         barMaxWidth: "10px"
-    //       }
-    //     ],
-    //     textStyle: {
-    //       color: "#ffffff"
-    //     }
-    //   });
-    // },
+    //涨停跌停数
+    UdChartDrawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      this.UdChart = this.$echarts.init(this.$refs.UdChart);
+      // 绘制图表
+      this.UdChart.setOption({
+        title: {
+          text: "涨停跌停数",
+          textStyle: {
+            color: "#000000"
+          }
+        },
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#979797"
+            }
+          }
+        },
+        grid: {
+          left: "10%",
+          right: "10%",
+          top: "20%",
+          bottom: "10%"
+        },
+        yAxis: {
+          type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: ["#979797"],
+              width: 1,
+              type: "dashed"
+            }
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        tooltip: {
+          show: true
+        },
+        legend: {
+          data: ["涨停", "跌停"],
+          right: "60px",
+          top: "0px",
+          inactiveColor: "#ffffff",
+          textStyle: {
+            color: "#000000"
+          }
+        },
+        series: [
+          {
+            name: "涨停",
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "line",
+            smooth: true,
+            lineStyle: {
+              color: "#FE1919"
+            }
+          },
+          {
+            name: "跌停",
+            data: [82, 93, 91, 94, 190, 130, 320],
+            type: "line",
+            smooth: true,
+            lineStyle: {
+              color: "#249900"
+            }
+          }
+        ],
+        textStyle: {
+          color: "#000000"
+        }
+      });
+    },
+    //成交量
+    moneyChartDrawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      this.moneyChart = this.$echarts.init(this.$refs.moneyChart);
+      // 绘制图表
+      this.moneyChart.setOption({
+        title: {
+          text: "成交量",
+          textStyle: {
+            color: "#000000"
+          }
+        },
+        grid: {
+          left: "10%",
+          right: "10%",
+          top: "20%",
+          bottom: "10%"
+        },
+        xAxis: {
+          show: false,
+          type: "category",
+          data: new Array(240),
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#979797"
+            }
+          }
+        },
+        yAxis: {
+          type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: ["#979797"],
+              width: 1,
+              type: "dashed"
+            }
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        tooltip: {
+          show: true,
+          trigger: "axis",
+          formatter(params) {
+            // debugger;
+            return `<span>时间</span>: ${params[0].data.time}<br/>
+            昨日: <span style="color: #FE1919">${params[0].value}</span><br/>
+            今日: <span style="color: #249900">${params[1].value}</span><br/>`;
+          }
+        },
+        legend: {
+          data: ["昨日", "今日"],
+          right: "80px",
+          inactiveColor: "#ffffff",
+          textStyle: {
+            color: "#000000"
+          }
+        },
+        series: [
+          {
+            name: "昨日",
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "line",
+            smooth: true,
+            lineStyle: {
+              color: "#FE1919"
+            }
+          },
+          {
+            name: "今日",
+            data: [82, 93, 91, 94, 190, 130, 320],
+            type: "line",
+            smooth: true,
+            lineStyle: {
+              color: "#249900"
+            }
+          }
+        ],
+        textStyle: {
+          color: "#000000"
+        }
+      });
+    },
+    //个股涨跌
+    meStockChartDrawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      this.meStockChart = this.$echarts.init(this.$refs.meStockChart);
+      // 绘制图表
+      this.meStockChart.setOption({
+        title: {
+          text: "个股涨跌",
+          textStyle: {
+            color: "#000000"
+          }
+        },
+        grid: {
+          left: "10%",
+          right: "10%",
+          top: "20%",
+          bottom: "15%"
+        },
+        xAxis: {
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#979797"
+            }
+          },
+          axisLabel: {
+            interval: 0,
+            rotate: 38
+          }
+        },
+        yAxis: {
+          type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: ["#979797"],
+              width: 1,
+              type: "dashed"
+            }
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        tooltip: {
+          show: true
+        },
+        series: [
+          {
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "bar",
+            smooth: true,
+            itemStyle: {
+              color: function (value) {
+                if (value.data.status == "up") {
+                  return "#FE1919";
+                } else {
+                  return "#249900";
+                }
+              }
+            },
+            barMaxWidth: "10px"
+          }
+        ],
+        textStyle: {
+          color: "#000000"
+        }
+      });
+    },
     //分钟换算
     formatSeconds(time) {
       return time * 60 * 1000;
     },
-    // //echarts自适应宽度
-    // echartsResize() {
-    //   let that = this;
-    //   window.addEventListener("resize", () => {
-    //     that.UdChart.resize();
-    //     that.moneyChart.resize();
-    //     that.meStockChart.resize();
-    //   });
-    // },
+    //echarts自适应宽度
+    echartsResize() {
+      let that = this;
+      window.addEventListener("resize", () => {
+        that.UdChart.resize();
+        that.moneyChart.resize();
+        that.meStockChart.resize();
+      });
+    },
     //国内指数
     quotIndexAll() {
       let that = this;
@@ -740,101 +770,101 @@ export default {
         }, that.formatSeconds(1));
       });
     },
-    // //涨停跌停数
-    // quotStockUpdownCount() {
-    //   let that = this;
-    //   quotStockUpdownCount().then(data => {
-    //     console.log("数据返回成功-涨停跌停数", data, 100);
-    //     data = data.data.data;
-    //     let upList = [];
-    //     let downList = [];
-    //     let xAxis = [];
-    //     //对比涨跌数组长度来取x轴的下标 保证数据显示完整
-    //     if (data.upList.length > data.downList.length) {
-    //       data.upList.forEach((item, index) => {
-    //         upList.push(item.count);
-    //         xAxis.push(item.time);
-    //         if (data.downList[index]) {
-    //           downList.push(data.downList[index].count);
-    //         }
-    //       });
-    //     } else {
-    //       data.downList.forEach((item, index) => {
-    //         downList.push(item.count);
-    //         xAxis.push(item.time);
-    //         if (data.upList[index]) {
-    //           upList.push(data.upList[index].count);
-    //         }
-    //       });
-    //     }
-    //     that.UdChart.setOption({
-    //       xAxis: {
-    //         data: xAxis
-    //       },
-    //       series: [
-    //         {
-    //           name: "涨停",
-    //           data: upList
-    //         },
-    //         {
-    //           name: "跌停",
-    //           data: downList
-    //         }
-    //       ]
-    //     });
-    //     that.quotStockUpdownCountTimer = setInterval(() => {
-    //       console.log("正在请求 - 涨停跌停数");
-    //       that.quotStockUpdownCount();
-    //       clearInterval(that.quotStockUpdownCountTimer);
-    //       console.log("请求结束 - 涨停跌停数", that.quotStockUpdownCountTimer);
-    //     }, that.formatSeconds(1));
-    //   });
-    // },
+    //涨停跌停数
+    quotStockUpdownCount() {
+      let that = this;
+      quotStockUpdownCount().then(data => {
+        console.log("数据返回成功-涨停跌停数", data, 100);
+        data = data.data.data;
+        let upList = [];
+        let downList = [];
+        let xAxis = [];
+        //对比涨跌数组长度来取x轴的下标 保证数据显示完整
+        if (data.upList.length > data.downList.length) {
+          data.upList.forEach((item, index) => {
+            upList.push(item.count);
+            xAxis.push(item.time);
+            if (data.downList[index]) {
+              downList.push(data.downList[index].count);
+            }
+          });
+        } else {
+          data.downList.forEach((item, index) => {
+            downList.push(item.count);
+            xAxis.push(item.time);
+            if (data.upList[index]) {
+              upList.push(data.upList[index].count);
+            }
+          });
+        }
+        that.UdChart.setOption({
+          xAxis: {
+            data: xAxis
+          },
+          series: [
+            {
+              name: "涨停",
+              data: upList
+            },
+            {
+              name: "跌停",
+              data: downList
+            }
+          ]
+        });
+        that.quotStockUpdownCountTimer = setInterval(() => {
+          console.log("正在请求 - 涨停跌停数");
+          that.quotStockUpdownCount();
+          clearInterval(that.quotStockUpdownCountTimer);
+          console.log("请求结束 - 涨停跌停数", that.quotStockUpdownCountTimer);
+        }, that.formatSeconds(1));
+      });
+    },
     //成交量
-    // quotStockTradevol() {
-    //   let that = this;
-    //   quotStockTradevol().then(data => {
-    //     // debugger;
-    //     console.log("数据返回成功 - 成交量", data.data);
-    //     data = data.data.data;
-    //     let volList = [];
-    //     let yesVolList = [];
-    //     data.volList.forEach((item, index) => {
-    //       volList.push({
-    //         time: item.time,
-    //         value: item.count
-    //       });
-    //       let value;
-    //       if (data.yesVolList[index] && data.yesVolList[index].count) {
-    //         value = data.yesVolList[index].count
-    //       } else {
-    //         value = 0;
-    //       }
-    //       yesVolList.push({
-    //         time: item.time,
-    //         value: value
-    //       });
-    //     });
-    //     that.moneyChart.setOption({
-    //       series: [
-    //         {
-    //           name: "今日",
-    //           data: volList
-    //         },
-    //         {
-    //           name: "昨日",
-    //           data: yesVolList
-    //         }
-    //       ]
-    //     });
-    //     that.quotStockTradevolTimer = setInterval(() => {
-    //       console.log("正在请求 - 成交量");
-    //       that.quotStockUpdown();
-    //       clearInterval(that.quotStockTradevolTimer);
-    //       console.log("请求结束 - 成交量", that.quotStockTradevolTimer);
-    //     }, that.formatSeconds(1));
-    //   });
-    // },
+    quotStockTradevol() {
+      let that = this;
+      quotStockTradevol().then(data => {
+        // debugger;
+        console.log("数据返回成功 - 成交量", data.data);
+        data = data.data.data;
+        let volList = [];
+        let yesVolList = [];
+        data.volList.forEach((item, index) => {
+          volList.push({
+            time: item.time,
+            value: item.count
+          });
+          let value;
+          if (data.yesVolList[index] && data.yesVolList[index].count) {
+            value = data.yesVolList[index].count
+          } else {
+            value = 0;
+          }
+          yesVolList.push({
+            time: item.time,
+            value: value
+          });
+        });
+        that.moneyChart.setOption({
+          series: [
+            {
+              name: "今日",
+              data: volList
+            },
+            {
+              name: "昨日",
+              data: yesVolList
+            }
+          ]
+        });
+        that.quotStockTradevolTimer = setInterval(() => {
+          console.log("正在请求 - 成交量");
+          that.quotStockUpdown();
+          clearInterval(that.quotStockTradevolTimer);
+          console.log("请求结束 - 成交量", that.quotStockTradevolTimer);
+        }, that.formatSeconds(1));
+      });
+    },
     //个股涨跌
     quotStockUpdown() {
       let that = this;
@@ -886,13 +916,13 @@ export default {
   },
   mounted() {
     //涨停跌停图表初始化
-    // this.UdChartDrawLine();
+    this.UdChartDrawLine();
     //赚钱效应图表初始化
-    // this.moneyChartDrawLine();
+    this.moneyChartDrawLine();
     //个股涨跌图表初始化
-    // this.meStockChartDrawLine();
+    this.meStockChartDrawLine();
     //图标自适应
-    // this.echartsResize();
+    this.echartsResize();
     //国内指数
     this.quotIndexAll();
     //板块指数
@@ -902,20 +932,20 @@ export default {
     //涨幅榜
     this.quotStockIncrease();
     //涨停跌停数
-    // this.quotStockUpdownCount();
+    this.quotStockUpdownCount();
     //个股涨跌
-    // this.quotStockUpdown();
+    this.quotStockUpdown();
     //成交量
-    // this.quotStockTradevol();
+    this.quotStockTradevol();
   },
   destroyed() {
     clearInterval(this.quotIndexAllTimer);
     clearInterval(this.quotSectorAllTimer);
     // clearInterval(this.quotExternalIndexTimer);
     clearInterval(this.quotStockIncreaseTimer);
-    // clearInterval(this.quotStockUpdownCountTimer);
-    // clearInterval(this.quotStockUpdownTimer);
-    // clearInterval(this.quotStockTradevolTimer);
+    clearInterval(this.quotStockUpdownCountTimer);
+    clearInterval(this.quotStockUpdownTimer);
+    clearInterval(this.quotStockTradevolTimer);
   }
 };
 </script>
@@ -969,6 +999,13 @@ export default {
           }
 
           .content {
+            flex: 1;
+            margin-right: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .time {
             flex: 1;
             margin-right: 22px;
             overflow: hidden;

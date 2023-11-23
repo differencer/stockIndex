@@ -1,8 +1,10 @@
 package com.lt.stock.mapper;
 
 import com.lt.stock.pojo.entity.StockRtInfo;
+import com.lt.stock.pojo.vo.StockRtLastTradeInfo;
 import com.lt.stock.pojo.vo.StockSearchResponseVo;
 import com.lt.stock.pojo.vo.StockUpDownResponseVo;
+import com.lt.stock.pojo.vo.WeeklineVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -55,4 +57,8 @@ public interface StockRtInfoMapper {
      * @param code 只接受代码模糊查询，不支持文字查询
      */
     List<StockSearchResponseVo> getStockSearch(@Param("code") String code);
+
+    List<WeeklineVo> getRtStockWeekline(String code);
+
+    List<StockRtLastTradeInfo> queryStockRtLastTradeInfo(String code);
 }

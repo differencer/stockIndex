@@ -3,6 +3,8 @@ package com.lt.stock.controller;
 import com.lt.stock.common.PageResult;
 import com.lt.stock.common.Response;
 import com.lt.stock.common.enums.ResponseCode;
+import com.lt.stock.pojo.vo.StockRtDescriptionVo;
+import com.lt.stock.pojo.vo.WeeklineVo;
 import com.lt.stock.pojo.vo.*;
 import com.lt.stock.service.StockService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +22,7 @@ import java.util.regex.Pattern;
 
 /**
  * @description:
- * @author: ~Teng~
+ * @author: taotao
  * @date: 2023/1/6 18:28
  */
 @RestController
@@ -151,18 +153,69 @@ public class StockController {
     /**
      * 根据输入的个股代码，进行模糊查询，返回证券代码和证券名称
      *
-     * @param code 只接受代码模糊查询，不支持文字查询
+     * @param searchStr 只接受代码模糊查询，不支持文字查询
      */
-    @GetMapping("/search")
-    public Response<List<StockSearchResponseVo> > getStockSearch(String code) {
-        if (StringUtils.isBlank(code)) {
+    @GetMapping("/stock/search")
+    public Response<List<StockSearchResponseVo> > getStockSearch(String searchStr) {
+        if (StringUtils.isBlank(searchStr)) {
             return Response.error(ResponseCode.DATA_ERROR.getMessage());
         }
         Pattern pattern = Pattern.compile("(\\d+)");
-        Matcher matcher = pattern.matcher(code);
+        Matcher matcher = pattern.matcher(searchStr);
         if (!matcher.find()) {
             return Response.error(ResponseCode.NO_CHINESE_DATA.getMessage());
         }
-        return stockService.getStockSearch(code);
+        return stockService.getStockSearch(searchStr);
+    }
+
+    /*
+    功能描述：个股主营业务查询接口
+    服务路径：/api/quot/stock/describe
+    服务方法：GET
+    请求参数：code #股票编码
+ */
+    @GetMapping("/stock/describe")
+    public Response<StockRtDescriptionVo> queryRtStockBusiness(String code){
+        return stockService.queryRtStockBusiness(code);
+    }
+
+
+    /*
+    功能描述：统计每周内的股票数据信息，信息包含：
+    股票ID、 一周内最高价、 一周内最低价 、周1开盘价、周5的收盘价、
+    整周均价、以及一周内最大交易日期（一般是周五所对应日期）;
+    服务路径：/api/quot/stock/screen/weekkline
+    服务方法：GET
+    请求参数：code //股票编码
+ */
+    @GetMapping("/stock/screen/weekkline")
+    public Response<List<WeeklineVo>> getRtStockWeekline(String code){
+        return stockService.getRtStockWeekline(code);
+    }
+
+    /*
+    功能描述：
+    获取个股最新分时行情数据，主要包含：
+    开盘价、前收盘价、最新价、最高价、最低价、成交金额和成交量、交易时间信息;
+    服务路径：/api/quot/stock/screen/second/detail
+    服务方法：GET
+    请求参数：code //股票编码
+    请求频率：每分钟
+ */
+    @GetMapping("/stock/screen/second/detail")
+    public Response<List<StockMinuteResponseVo>> getStockRtMinuteInfo(String code){
+        return stockService.getStockMinute(code);
+    }
+
+    /*
+     功能描述：个股交易流水行情数据查询--查询最新交易流水，按照交易时间降序取前10
+     服务路径：/quot/stock/screen/second
+     服务方法：GET
+     请求频率：5秒
+     *********服务路径不是 api/quot/........
+  */
+    @GetMapping("/stock/screen/second")
+    public Response<List<StockRtLastTradeInfo>> queryStockRtLastTradeInfo(String code){
+        return stockService.queryStockRtLastTradeInfo(code);
     }
 }

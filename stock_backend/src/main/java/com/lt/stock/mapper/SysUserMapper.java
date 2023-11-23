@@ -1,8 +1,11 @@
 package com.lt.stock.mapper;
 
 import com.lt.stock.pojo.entity.SysUser;
+import com.lt.stock.pojo.vo.ConditionQueryUserReq;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author teng
@@ -29,4 +32,8 @@ public interface SysUserMapper {
      * 根据用户名查询用户信息
      */
     SysUser findByUserName(@Param("username") String username);
+
+    List<SysUser> conditionsQueryUser(@Param("req") ConditionQueryUserReq req);
+
+    void insertUser(@Param("adduser") SysUser adduser);
 }

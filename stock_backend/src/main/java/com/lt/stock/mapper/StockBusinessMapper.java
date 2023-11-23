@@ -1,6 +1,8 @@
 package com.lt.stock.mapper;
 
 import com.lt.stock.pojo.entity.StockBusiness;
+import com.lt.stock.pojo.vo.StockRtDescriptionVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +32,6 @@ public interface StockBusinessMapper {
      * 获取所有股票的code
      */
     List<String> getAllStockCode();
+
+    StockRtDescriptionVo queryRtStockBusiness(@Param("code") String code);
 }

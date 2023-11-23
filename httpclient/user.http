@@ -1,0 +1,13 @@
+### 用户管理
+POST http://127.0.0.1:8080/api/users
+Content-Type: application/json
+
+{
+  "pageNum": 1,
+  "pageSize": 10,
+  "username": "",
+  "nickName": "",
+  "status": "",
+  "startTime": "",
+  "endTime": ""
+}

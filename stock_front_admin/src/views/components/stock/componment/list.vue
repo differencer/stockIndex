@@ -63,6 +63,7 @@ export default {
           prop: "tradePrice",
           label: "最新价",
           isDifferentStates: true,
+          isMP: "",
           extraTextBefore: "",
           extraTextAfter: "",
           defaults: "0"
@@ -78,6 +79,7 @@ export default {
         {
           prop: "increase",
           label: "涨幅",
+
           isDifferentStates: "",
           extraTextBefore: "",
           extraTextAfter: "",
@@ -86,7 +88,7 @@ export default {
         {
           prop: "amplitude",
           label: "振幅",
-          isDifferentStates: true,
+          isDifferentStates: "",
           extraTextBefore: "",
           extraTextAfter: "",
           defaults: "0"

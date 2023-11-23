@@ -2,7 +2,7 @@
   <div id="stockapp">
     <el-container>
       <el-header height="50px">
-        <div class="header-name">今日股票指数</div>
+        <div class="header-name">沪深股市行情</div>
         <div class="seach">
           <div class="seach-name">股票搜索：</div>
           <div
@@ -188,7 +188,8 @@ export default {
           margin-top: 20px;
           width: 100%;
           height: 100%;
-          background-color: #ff4d51;
+          // 搜索框背景板颜色
+          background-color: #ffffff;
           color: #000;
           font-size: 14px;
           overflow-y: auto;

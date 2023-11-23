@@ -93,4 +93,11 @@ public interface StockService {
      * @param code 只接受代码模糊查询，不支持文字查询
      */
     Response<List<StockSearchResponseVo> > getStockSearch(String code);
+
+
+    Response<StockRtDescriptionVo> queryRtStockBusiness(String code);
+
+    Response<List<WeeklineVo>> getRtStockWeekline(String code);
+
+    Response<List<StockRtLastTradeInfo>> queryStockRtLastTradeInfo(String code);
 }

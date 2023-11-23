@@ -91,7 +91,7 @@ xxl:
       addresses: http://127.0.0.1:8082/xxl-job-admin
     executor:
       appname: stock-xxl-job-executor
-      address:
+      address: http://127.0.0.1
       ip:
       port: 6666
       logpath: /joblog

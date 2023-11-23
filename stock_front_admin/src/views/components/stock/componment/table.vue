@@ -17,8 +17,8 @@
         :show-overflow-tooltip="true" >
         <template slot-scope="scope">
           <div
-            :style="{ color: getScopeRowItemStates(item.isDifferentStates,scope,item)}"
-            :class="getScopeRowItemStates(item.isDifferentStates,scope,item)"
+            :style="{ color: getScopeRowItemStates(item.isDifferentStates,item.isMP,scope,item) }"
+            :class="getScopeRowItemStates(item.isDifferentStates,item.isMP,scope,item)"
           >{{ getScopeRowItem(scope,item)  }}</div>
         </template>
       </el-table-column>
@@ -79,17 +79,31 @@ export default {
       let extraTextAfter = item.extraTextAfter ? item.extraTextAfter : "";
       return extraTextBefore + data + extraTextAfter;
     },
-    getScopeRowItemStates(states, scope, item) {
+
+    getScopeRowItemStates(states,isMP, scope, item) {
       if (states) {
-        if (Number(scope.row[item.prop]) > Number(scope.row["preClosePrice"])) {
-          return "#FE1919";
-        } else if (
-          Number(scope.row[item.prop]) < Number(scope.row["preClosePrice"])
-        ) {
-          return "#249900";
-        } else {
-          return "";
+        if(isMP){
+          if(Number(scope.row[item.prop]) > Number(0)){
+            return "#FE1919";
+          }else if (
+              Number(scope.row[item.prop]) < Number(0)
+          ){
+            return "#249900";
+          }else {
+            return "";
+          }
+        }else{
+          if (Number(scope.row[item.prop]) > Number(scope.row["preClosePrice"])) {
+            return "#FE1919";
+          } else if (
+              Number(scope.row[item.prop]) < Number(scope.row["preClosePrice"])
+          ) {
+            return "#249900";
+          } else {
+            return "";
+          }
         }
+
       }
       // if (states) {
       //   if (Number(scope.row[item.prop]) > Number(scope.row["preClosePrice"])) {
@@ -121,26 +135,28 @@ export default {
     background-color: rgba(225, 225, 225, 0) !important;
   }
 
+
   .el-table tr {
-    background-color: #222733 !important;
+    background-color: #f0f2f5 !important;
     border: none !important;
-    color: #EDEDED !important;
+    //表格字体行颜色
+    color: #000000 !important;
   }
 
   .el-table th {
-    background-color: #222733 !important;
+    background-color: #f0f2f5 !important;
     border: none !important;
   }
 
   .el-table td {
-    background-color: #222733 !important;
+    background-color: #f0f2f5 !important;
     border: none !important;
 
   }
 
   .el-table--small td {
     padding: 10px 0 !important;
-    color: #CDCDCD !important;
+    color: #000000 !important;
   }
 
   .el-table {
@@ -153,6 +169,7 @@ export default {
 
   .el-table--enable-row-hover .el-table__body tr:hover>td {
     background-color: #434C62 !important;
+    color: #ffffff !important;
   }
 
 

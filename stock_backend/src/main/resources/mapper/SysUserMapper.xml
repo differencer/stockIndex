@@ -94,6 +94,12 @@
             <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
+    <insert id="insertUser" parameterType="com.lt.stock.pojo.entity.SysUser">
+
+        INSERT INTO sys_user (id,username, `password`, phone, email, nick_name, real_name, sex, create_where, `status`)
+        VALUES (#{addUser.id},#{addUser.username}, #{addUser.password}, #{addUser.phone}, #{addUser.email}, #{addUser.nickName},
+                #{addUser.realName}, #{addUser.sex}, #{addUser.createWhere}, #{addUser.status})
+    </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.lt.stock.pojo.entity.SysUser">
         update sys_user
         <set>
@@ -166,4 +172,37 @@
         <include refid="Base_Column_List"/>
         from sys_user where deleted = 1 and username = #{username}
     </select>
+
+
+
+
+    <select id="conditionsQueryUser" resultType="com.lt.stock.pojo.entity.SysUser"
+            parameterType="com.lt.stock.pojo.vo.ConditionQueryUserReq">
+        SELECT
+        u1.*,
+        u2.username AS createUserName,
+        u3.username AS updateUserName
+        FROM
+        sys_user u1
+        LEFT JOIN sys_user u2 on u1.create_id = u2.id
+        LEFT JOIN sys_user u3 on u1.update_id = u3.id
+        <where>
+            <if test="req.username!=null and req.username!=''">
+                u1.username = #{req.username}
+            </if>
+            <if test="req.nickName!=null and req.nickName!=''">
+                and u1.nick_name = #{req.nickName}
+            </if>
+            <if test="req.startTime!=null and req.startTime.trim()!=''">
+                and u1.create_time &gt;=#{req.startTime}
+            </if>
+            <if test="req.endTime!=null and req.endTime.trim()!=''">
+                and u1.create_time &lt;=#{req.endTime}
+            </if>
+        </where>
+
+
+    </select>
+
+
 </mapper>

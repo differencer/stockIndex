@@ -31,4 +31,9 @@ public interface SysRoleMapper {
      * 根据用户id查询角色信息
      */
     List<SysRole> getRoleByUserId(@Param("userId") String userId);
+
+
+    List<String> queryRolesById(String id);
+
+    List<SysRole> queryAllRole();
 }

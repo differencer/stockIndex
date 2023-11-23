@@ -4,7 +4,7 @@ module.exports = {
     affix: true,// 是否显示图钉
     isRefrushBack: true,// 刷新后是否停在当前页,默认回到首页
     authorization: 'authorization',// 请求头 token key
-    title: '今日指数', // 标题
+    title: '行情中心', // 标题
     // footer:'权限管理系统',// 底部文字，注释掉默认没有底部
     iconPath: './assets/images/logo-0.png',// 网页 icon 图标路径
     publicPath: '/',// 网站根目录，打包时用到

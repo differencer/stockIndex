@@ -2,6 +2,8 @@ package com.lt.stock.mapper;
 
 import com.lt.stock.pojo.entity.SysUserRole;
 
+import java.util.Date;
+
 /**
 * @author teng
 * @description 针对表【sys_user_role(用户角色表)】的数据库操作Mapper
@@ -22,4 +24,7 @@ public interface SysUserRoleMapper {
 
     int updateByPrimaryKey(SysUserRole record);
 
+    void deleteByUserId(String userId);
+
+    void inserByUserRoleIds(long primaryKey, String userId, String roleId, Date date);
 }

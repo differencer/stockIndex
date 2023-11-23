@@ -169,7 +169,7 @@ export default {
 
 .mask {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -186,8 +186,9 @@ export default {
   max-width: 100%;
   padding-bottom: 50px;
   margin: 0 auto;
+  margin-right: 10%; /* 右边距 */
   /*margin: 130px 35px 0;*/
-  background: #e1f3d8;
+  background: #d9ecff;
   border-radius: 4px;
   box-shadow: 0 0 6px #cac6c6;
 

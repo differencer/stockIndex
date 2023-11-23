@@ -1,5 +1,5 @@
 ### 新浪接口需要设置referer
-http://hq.sinajs.cn?list=sh000001
+http://hq.sinajs.cn?list=sh600000
 Referer: http://finance.sina.com.cn
 
 ### 大盘查询接口
@@ -31,4 +31,7 @@ http://localhost:8080/api/quot/stock/screen/time-sharing?code=600019
 
 ### 个股k线
 http://localhost:8080/api/quot/stock/screen/dkline?code=600019
+
+### 个股交易流水行情数据查询--查询最新交易流水，按照交易时间降序取前10
+http://localhost:8080/api/quot/stock/screen/second
 
